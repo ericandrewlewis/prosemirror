@@ -480,6 +480,21 @@ handlers.drop = (pm, e) => {
       tr.delete(pm.input.draggingFrom.from, pm.input.draggingFrom.to)
       insertPos = tr.map(insertPos).pos
     }
+
+    // Temporarily focus on the first node, and later figure out how to handle a bunch of nodes.
+    let nodeToInsert = fragment.doc.path([0])
+    // If the node to be inserted is a block, find a good place for it.
+    if (nodeToInsert.isBlock) {
+      let candidateNodes = pm.doc.pathNodes(insertPos.path)
+      let currentCandidate = candidateNodes.length - 1
+      for (;;) {
+        if ( candidateNodes[currentCandidate].type.canContainContent(nodeToInsert.type) ) {
+          insertPos = new Pos(insertPos.path.slice(0, currentCandidate), 0)
+          break;
+        }
+        currentCandidate--;
+      }
+    }
     tr.replace(insertPos, insertPos, fragment.doc, fragment.from, fragment.to).apply()
     let posAfter = tr.map(origPos).pos
     if (Pos.samePath(insertPos.path, posAfter.path) && posAfter.offset == insertPos.offset + 1 &&
