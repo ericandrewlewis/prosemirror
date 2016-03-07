@@ -33,7 +33,7 @@
   },
   "scripts": {
     "test": "node dist/test/run.js",
-    "demo": "moduleserve demo",
+    "demo": "moduleserve demo --transform babel",
     "distfs": "mkdir -p dist && distfs src dist",
     "dist": "babel -d dist src",
     "dist-watch": "babel -w -d dist src",

@@ -1,7 +1,8 @@
-var ProseMirror = require("../dist/edit/main").ProseMirror
-require("../dist/inputrules/autoinput")
-require("../dist/menu/tooltipmenu")
-require("../dist/menu/menubar")
+import {ProseMirror} from "../dist/edit/main"
+import "../dist/inputrules/autoinput"
+import "../dist/menu/tooltipmenu"
+import "../dist/menu/menubar"
+import {LockedBlock} from "./lockedblock"
 
 var pm = window.pm = new ProseMirror({
   place: document.querySelector(".full"),
